@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Home - Portail vitrine DIASONAMA -->
+<div id="home-body">
+
+  <!-- Hero -->
+  <section class="hero text-white py-5" aria-label="Hero">
+    <div class="hero-bg" style='background-image: url("{% static 'images/WhatsApp Image 2026-01-02 at 12.21.24.jpeg' %}");'></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 text-center text-lg-start">
+          <h1 class="display-4 fw-bold">DIASONAMA — Solidarité, Santé, Formation</h1>
+          <p class="lead text-white-75">Nous accompagnons les communautés locales par des projets, des formations et des actions de terrain.</p>
+    
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Widgets: quick stats & upcoming -->
+  <section class="widgets bg-white" aria-label="Widgets">
+    <div class="container">
+      <div class="widgets-grid">
+        <div class="widget-card">
+          <div class="widget-icon" style="background:linear-gradient(135deg,var(--color-primary),#6ea8fe)">
+            <i class="bi bi-people-fill" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="widget-title">Bénévoles actifs</div>
+            <div class="widget-value">128</div>
+            <div class="widget-note">Membres ayant participé ce mois</div>
+          </div>
+        </div>
+
+        <div class="widget-card">
+          <div class="widget-icon" style="background:linear-gradient(135deg,var(--color-accent),#6fe1b0)">
+            <i class="bi bi-calendar-event-fill" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="widget-title">Prochains événements</div>
+            <div class="widget-value">3</div>
+            <div class="widget-note">Voir le calendrier pour tous les événements</div>
+          </div>
+        </div>
+
+        <div class="widget-card">
+          <div class="widget-icon" style="background:linear-gradient(135deg,#ffd43b,#ffc107)">
+            <i class="bi bi-heart-fill" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="widget-title">Dons reçus</div>
+            <div class="widget-value">€4,800</div>
+            <div class="widget-note">Ce trimestre</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Événements à venir -->
+  <section class="py-5" aria-label="Événements">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h3 mb-0">Événements à venir</h2>
+        <a href="/activities/" class="btn btn-link">Voir tous</a>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <a href="/activities/" class="card h-100 shadow-sm text-reset text-decoration-none d-block" aria-label="Voir Campagne santé — Région A">
+            <img src="{% static 'images/gallery1.svg' %}" class="card-img-top" alt="Événement 1">
+            <div class="card-body">
+              <h5 class="card-title">Campagne santé — Région A</h5>
+              <p class="card-text text-muted">15 mars 2026 — Consultation et sensibilisation.</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="/activities/" class="card h-100 shadow-sm text-reset text-decoration-none d-block" aria-label="Voir Formation volontaires">
+            <img src="{% static 'images/gallery2.svg' %}" class="card-img-top" alt="Événement 2">
+            <div class="card-body">
+              <h5 class="card-title">Formation volontaires</h5>
+              <p class="card-text text-muted">22 avril 2026 — Durée : 3 jours.</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="/activities/" class="card h-100 shadow-sm text-reset text-decoration-none d-block" aria-label="Voir Journée de sensibilisation">
+            <img src="{% static 'images/gallery3.svg' %}" class="card-img-top" alt="Événement 3">
+            <div class="card-body">
+              <h5 class="card-title">Journée de sensibilisation</h5>
+              <p class="card-text text-muted">10 mai 2026 — Stands et ateliers.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nos actions / services -->
+  <section class="py-5 bg-light" aria-label="Nos actions">
+    <div class="container">
+      <div class="text-center mb-4">
+        <h2>Nos actions</h2>
+        <p class="text-muted">Projets, formations et événements pour soutenir les populations locales.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <a href="/activities/?category=projets" class="card h-100 border-0 shadow-sm text-center p-3 text-reset text-decoration-none d-block" aria-label="Voir Projets locaux">
+            <img src="{% static 'images/icon-projects.svg' %}" alt="Projets" class="mx-auto mb-3" style="width:64px;height:64px;">
+            <h5>Projets locaux</h5>
+            <p class="text-muted">Mise en place d'actions concrètes sur le terrain.</p>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="/activities/?category=formations" class="card h-100 border-0 shadow-sm text-center p-3 text-reset text-decoration-none d-block" aria-label="Voir Formations">
+            <img src="{% static 'images/icon-training.svg' %}" alt="Formations" class="mx-auto mb-3" style="width:64px;height:64px;">
+            <h5>Formations</h5>
+            <p class="text-muted">Renforcement des compétences des volontaires et équipes locales.</p>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="/activities/?category=evenements" class="card h-100 border-0 shadow-sm text-center p-3 text-reset text-decoration-none d-block" aria-label="Voir Événements">
+            <img src="{% static 'images/icon-events.svg' %}" alt="Événements" class="mx-auto mb-3" style="width:64px;height:64px;">
+            <h5>Événements</h5>
+            <p class="text-muted">Campagnes de sensibilisation et opérations publiques.</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projets / réalisations -->
+  <section class="py-5" aria-label="Nos réalisations">
+    <div class="container">
+      <div class="row align-items-center gy-4">
+        <div class="col-lg-6">
+          <h2>Nos réalisations</h2>
+          <p class="text-muted">Rapports, témoignages et exemples concrets de notre travail sur le terrain.</p>
+          <p>
+            <a href="/reports/" class="btn btn-outline-primary me-2">Voir les rapports</a>
+            <a href="/activities/" class="btn btn-primary">Voir les activités</a>
+          </p>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="row g-2">
+            <div class="col-6"><img src="{% static 'images/gallery4.svg' %}" class="img-fluid rounded shadow-sm" alt="Réalisation 1"></div>
+            <div class="col-6"><img src="{% static 'images/gallery5.svg' %}" class="img-fluid rounded shadow-sm" alt="Réalisation 2"></div>
+            <div class="col-6"><img src="{% static 'images/gallery6.svg' %}" class="img-fluid rounded shadow-sm" alt="Réalisation 3"></div>
+            <div class="col-6"><img src="{% static 'images/mockup.svg' %}" class="img-fluid rounded shadow-sm" alt="Réalisation 4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galerie -->
+  <section class="py-5 bg-white" aria-label="Galerie">
+    <div class="container">
+      <div class="text-center mb-4">
+        <h2>Galerie</h2>
+        <p class="text-muted">Quelques images marquantes de nos actions.</p>
+      </div>
+      <div class="row g-3">
+        <div class="col-sm-6 col-md-3">
+          <div class="photo-circle">
+            <img src="{% static 'images/WhatsApp Image 2026-01-02 at 12.21.24.jpeg' %}" class="img-fluid" alt="Photo 1">
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <div class="photo-circle">
+            <img src="{% static 'images/WhatsApp Image 2026-01-02 at 12.20.36.jpeg' %}" class="img-fluid" alt="Photo 2">
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <div class="photo-circle">
+            <img src="{% static 'images/WhatsApp Image 2026-01-02 at 12.22.21.jpeg' %}" class="img-fluid" alt="Photo 3">
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <div class="photo-circle">
+            <img src="{% static 'images/WhatsApp Image 2026-01-02 at 12.22.22.jpeg' %}" class="img-fluid" alt="Photo 4">
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Équipe -->
+  <section class="py-5 bg-light" aria-label="Équipe">
+    <div class="container">
+      <div class="text-center mb-4">
+        <h2>Notre équipe</h2>
+        <p class="text-muted">Les personnes qui font vivre DIASONAMA.</p>
+      </div>
+      <div class="row g-2 mb-2">
+          <div class="row">
+              <div class="col-sm-6 col-md-3 mx-auto">
+                <div class="card text-center border-0">
+                  <div class="card-body">
+                    <img src="{% static 'images/team1.svg' %}" alt="Membre 1" class="rounded-circle mb-3 team-photo" />
+                    <h5 class="mb-1">Belby</h5>
+                    <div class="text-muted small">Superviseur</div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="row">
+                <div class="col-sm-6 col-md-3">
+                <div class="card text-center border-0">
+                  <div class="card-body">
+                    <img src="{% static 'images/team2.svg' %}" alt="Membre 2" class="rounded-circle mb-3 team-photo" />
+                    <h5 class="mb-1">Gloire</h5>
+                    <div class="text-muted small">Encadreur</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="card text-center border-0">
+                  <div class="card-body">
+                    <img src="{% static 'images/team2.svg' %}" alt="Membre 2" class="rounded-circle mb-3 team-photo" />
+                    <h5 class="mb-1">Merveille</h5>
+                    <div class="text-muted small">Encadreur</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="card text-center border-0">
+                  <div class="card-body">
+                    <img src="{% static 'images/team3.svg' %}" alt="Membre 3" class="rounded-circle mb-3 team-photo" />
+                    <h5 class="mb-1">Ebenezer</h5>
+                    <div class="text-muted small">Encadreur</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="card text-center border-0">
+                  <div class="card-body">
+                    <img src="{% static 'images/team4.svg' %}" alt="Membre 4" class="rounded-circle mb-3 team-photo" />
+                    <h5 class="mb-1">Chancelvie</h5>
+                    <div class="text-muted small">Encadreur</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="py-5 text-center bg-primary text-white">
+    <div class="container">
+      <h3 class="mb-3">Soutenez nos actions</h3>
+      <p class="mb-4">Rejoignez-nous ou contribuez pour aider nos missions.</p>
+      <a href="/contact/" class="btn btn-light btn-lg me-2">Contact</a>
+      <a href="/about/" class="btn btn-outline-light btn-lg">En savoir plus</a>
+      </div>
+    </div>
+  </section>
+<br>
+</div>
+
+{% endblock %}

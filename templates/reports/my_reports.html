@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <!-- Supervisor overview row: three cards in one line -->
+    <div class="overview-cards mb-4">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <a href="{% url 'reports_my' %}" class="overview-card text-decoration-none d-block">
+            <div class="card p-3">
+              <div class="d-flex align-items-center gap-3">
+                <div class="ov-icon bg-primary text-white rounded-3 p-2"><i class="bi bi-file-earmark-text-fill"></i></div>
+                <div>
+                  <div class="small text-muted">Mes rapports</div>
+                  <div class="h5 mb-0">{% if reports_count %}{{ reports_count }}{% elif reports %}{{ reports|length }}{% else %}0{% endif %}</div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="#" class="overview-card text-decoration-none d-block">
+            <div class="card p-3">
+              <div class="d-flex align-items-center gap-3">
+                <div class="ov-icon bg-success text-white rounded-3 p-2"><i class="bi bi-people-fill"></i></div>
+                <div>
+                  <div class="small text-muted">Encadreurs assignés</div>
+                  <div class="h5 mb-0">{% if supervisors_count %}{{ supervisors_count }}{% elif supervisors %}{{ supervisors|length }}{% else %}—{% endif %}</div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="#" class="overview-card text-decoration-none d-block">
+            <div class="card p-3">
+              <div class="d-flex align-items-center gap-3">
+                <div class="ov-icon bg-warning text-white rounded-3 p-2"><i class="bi bi-person-check-fill"></i></div>
+                <div>
+                  <div class="small text-muted">Utilisateurs disponibles</div>
+                  <div class="h5 mb-0">{% if users_count %}{{ users_count }}{% elif users %}{{ users|length }}{% else %}—{% endif %}</div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <h1>Mes rapports</h1>
+    {% if reports %}
+      <ul class="activities-grid">
+        {% for r in reports %}
+          <li class="activity-card">
+            <h3><a href="{% url 'reports_detail' r.pk %}">{% if r.activity %}{{ r.activity.title }}{% else %}—{% endif %}</a></h3>
+            <div class="meta">Par {{ r.author.get_full_name|default:r.author.username }} — {{ r.date }}</div>
+            <p class="desc">{{ r.text|truncatechars:180 }}</p>
+          </li>
+        {% endfor %}
+      </ul>
+      {% if is_paginated %}
+        <div class="pagination">
+          {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">Précédent</a>{% endif %}
+          <span>Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+          {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Suivant</a>{% endif %}
+        </div>
+      {% endif %}
+    {% else %}
+      <p>Aucun rapport trouvé.</p>
+    {% endif %}
+  </div>
+{% endblock %}

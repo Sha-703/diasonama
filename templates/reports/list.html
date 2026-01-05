@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h1>Rapports</h1>
+  <p><a class="btn btn-primary" href="{% url 'reports_create' %}">Nouveau rapport</a></p>
+  {% if reports %}
+    <ul>
+      {% for r in reports %}
+        <li>
+          <a href="{% url 'reports_detail' r.pk %}">{{ r.date }} — {{ r.author.get_full_name|default:r.author.username }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    {% if is_paginated %}
+      <p>Page navigation (non stylée simple)</p>
+    {% endif %}
+  {% else %}
+    <p>Aucun rapport trouvé.</p>
+  {% endif %}
+</div>
+{% endblock %}

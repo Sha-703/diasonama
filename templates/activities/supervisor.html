@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <h1>Espace Superviseur</h1>
+    <p>Gérez vos encadreurs et créez de nouveaux comptes.</p>
+
+    <!-- Top row: create encadreur + quick report -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5">Créer un encadreur</h2>
+            <form method="post" novalidate>
+              {% csrf_token %}
+              <input type="hidden" name="action" value="create_encadreur">
+
+              <div class="mb-3">
+                <label for="id_username" class="form-label">Nom d'utilisateur</label>
+                <input id="id_username" name="username" required class="form-control" placeholder="ex: jdupont" autofocus>
+              </div>
+
+              <div class="mb-3">
+                <label for="id_email" class="form-label">Email</label>
+                <input id="id_email" name="email" type="email" class="form-control" placeholder="nom@exemple.com">
+              </div>
+
+              <div class="row g-2 mb-3">
+                <div class="col">
+                  <label for="id_first_name" class="form-label">Prénom</label>
+                  <input id="id_first_name" name="first_name" class="form-control" placeholder="Prénom">
+                </div>
+                <div class="col">
+                  <label for="id_last_name" class="form-label">Nom</label>
+                  <input id="id_last_name" name="last_name" class="form-control" placeholder="Nom">
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-primary" type="submit">Créer</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5">Créer un rapport rapide</h2>
+            <form method="post" action="{% url 'supervisor_create_report' %}" enctype="multipart/form-data" novalidate>
+              {% csrf_token %}
+
+              <div class="row g-2">
+                <div class="col-md-6 mb-3">
+                  <label for="id_date" class="form-label">Date</label>
+                  <input id="id_date" name="date" type="date" class="form-control">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="id_activity" class="form-label">Activité</label>
+                  <select id="id_activity" name="activity" class="form-select">
+                    <option value="">(aucune)</option>
+                    {% for act in activities %}
+                      <option value="{{ act.pk }}">{{ act.title }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="id_text" class="form-label">Texte</label>
+                <textarea id="id_text" name="text" class="form-control" rows="4" placeholder="Décrivez brièvement l'activité..."></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="id_photo" class="form-label">Photo (optionnel)</label>
+                <input id="id_photo" type="file" name="photo" class="form-control">
+                <div class="form-text">Formats acceptés: JPG/PNG. Taille maximale recommandée 5MB.</div>
+              </div>
+
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-primary" type="submit">Créer le rapport</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overview row: Mes rapports | Encadreurs assignés | Utilisateurs disponibles -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5">Mes rapports</h2>
+            <p class="mb-2"><a class="btn btn-sm btn-outline-primary" href="{% url 'reports_my' %}">Voir mes rapports</a></p>
+            {% if reports_summary %}
+              <ul class="mb-0">
+                {% for r in reports_summary %}
+                  <li class="small">{{ r.date }} — {% if r.activity %}{{ r.activity.title }}{% else %}—{% endif %}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5">Encadreurs assignés</h2>
+            {% if assignments %}
+              <ul class="mb-0">
+                {% for a in assignments %}
+                  <li class="small">{{ a.encadreur.username }} — {{ a.encadreur.get_full_name }}
+                    <form method="post" style="display:inline">
+                      {% csrf_token %}
+                      <input type="hidden" name="action" value="unassign">
+                      <input type="hidden" name="assignment_id" value="{{ a.pk }}">
+                      <button class="btn btn-sm btn-outline-secondary" type="submit">Désassigner</button>
+                    </form>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="small mb-0">Aucun encadreur assigné.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5">Utilisateurs disponibles</h2>
+            <p class="small">Attribuez un utilisateur existant comme encadreur.</p>
+            <ul class="mb-0">
+              {% for u in available_users %}
+                <li class="small">{{ u.username }} — {{ u.get_full_name }}
+                  <form method="post" style="display:inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="assign">
+                    <input type="hidden" name="user_id" value="{{ u.pk }}">
+                    <button class="btn btn-sm btn-primary" type="submit">Assigner</button>
+                  </form>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

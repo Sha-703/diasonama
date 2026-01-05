@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+  {% load static %}
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Association DIASONAMA</title>
+    <!-- Bootstrap CSS (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+      .msg{padding:10px;border-radius:6px;margin:8px 0}
+      .msg-error{background:#fdecea;color:#611a15}
+      .msg-success{background:#e7f7ee;color:#0b6b3a}
+      .input-field{width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;margin:6px 0}
+    </style>
+  </head>
+  <body>
+    <div class="site-wrapper">
+      <div class="flash-messages container">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="msg msg-{{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <header class="site-header">
+        <div class="container header-inner">
+          <div class="brand">
+            <a href="/">DIASONAMA</a>
+          </div>
+          {% block nav %}
+          <nav class="navbar navbar-expand-lg navbar-light w-100" aria-label="Main navigation">
+            <!-- Toggler sits after brand for small screens -->
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+              <!-- Centered links -->
+              <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="/about/">À propos</a></li>
+                <li class="nav-item"><a class="nav-link" href="/activities/">Activités</a></li>
+                <li class="nav-item"><a class="nav-link" href="/contact/">Contact</a></li>
+              </ul>
+              <!-- Actions on the right -->
+              <div class="d-flex align-items-center ms-auto">
+                <a class="btn btn-outline-primary me-2 d-none d-lg-inline" href="/about/">À propos</a>
+                <a class="btn btn-primary" href="/private/">Espace Privé</a>
+              </div>
+            </div>
+          </nav>
+          {% endblock %}
+        </div>
+      </header>
+
+      <main class="site-main">
+        {% block content %}{% endblock %}
+      </main>
+
+      
+    </div>
+
+    <!-- Lightbox modal -->
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+      <button class="lightbox-close" aria-label="Fermer">×</button>
+      <img class="lightbox-img" src="" alt="" />
+      <p class="lightbox-caption"></p>
+    </div>
+
+    <footer class="site-footer bg-light border-top">
+        <div class="container py-4">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-muted">© Association DIASONAMA — Tous droits réservés</div>
+            <div class="col-md-6 text-md-end">
+              <a class="text-muted me-3" href="/about/">À propos</a>
+              <a class="text-muted me-3" href="/contact/">Contact</a>
+              <a class="text-muted me-3" href="/private/">Espace Privé</a>
+              <a class="text-muted" href="mailto:associationdiasonama@gmail.com">associationdiasonama@gmail.com</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    <!-- Bootstrap JS bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/lightbox.js' %}"></script>
+  </body>
+</html>

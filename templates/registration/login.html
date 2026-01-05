@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="auth-page">
+    <div class="auth-left" style="background-image:url('{% static "images/hero.svg" %}')">
+      <div class="auth-left-overlay"></div>
+      <div class="auth-left-content">
+        <h1>Welcome Back</h1>
+        <p>Connectez-vous pour accéder à votre espace privé et gérer vos activités.</p>
+      </div>
+    </div>
+
+    <div class="auth-right">
+      <div class="auth-card">
+        <h2>Sign in</h2>
+        {% if form.errors %}
+          <div class="msg msg-error">Nom d'utilisateur ou mot de passe invalide.</div>
+        {% endif %}
+        <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          <label for="id_username">Nom d'utilisateur</label>
+          <input id="id_username" name="username" type="text" required class="input-field">
+
+          <label for="id_password">Mot de passe</label>
+          <input id="id_password" name="password" type="password" required class="input-field">
+
+          <input type="hidden" name="next" value="{{ next }}">
+          <div style="display:flex;gap:8px;align-items:center;margin-top:12px;">
+            <button class="btn btn-primary" type="submit">Sign in</button>
+            <a class="btn btn-outline" href="/">Retour</a>
+          </div>
+        </form>
+        <p style="margin-top:12px"><a href="{% url 'password_reset' %}">Mot de passe oublié ?</a></p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

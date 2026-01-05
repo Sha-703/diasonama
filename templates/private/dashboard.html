@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block nav %}
+  <div class="container header-inner">
+    <div class="brand">
+      <a href="/">Association DIASONAMA</a>
+    </div>
+    <nav class="private-nav">
+      <a href="{% url 'private' %}">Dashboard</a>
+      <a href="{% url 'reports_my' %}">Mes rapports</a>
+      <a href="{% url 'reports_create' %}">Créer</a>
+      <a href="{% url 'inbox_list' %}">Messages</a>
+    </nav>
+    <div class="private-user">
+      <span class="muted">{{ request.user.get_full_name|default:request.user.username }}</span>
+      <form action="{% url 'logout' %}" method="post" class="logout-form">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline">Se déconnecter</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+{% block content %}
+<div class="dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <div class="sidebar-brand">
+      <div class="avatar">{{ request.user.first_name|slice:":1"|default:request.user.username|slice:":1" }}</div>
+      <div class="brand-info">
+        <strong>{{ request.user.get_full_name|default:request.user.username }}</strong>
+        <small class="muted">{{ request.user.email }}</small>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <ul>
+        <li class="active"><a href="{% url 'private' %}">Tableau de bord</a></li>
+        <li><a href="{% url 'reports_my' %}">Mes rapports</a></li>
+        <li><a href="{% url 'reports_create' %}">Créer rapport</a></li>
+        <li><a href="{% url 'inbox_list' %}">Messages</a></li>
+        {% if roles.superviseur %}
+          <li><a href="{% url 'supervisor_dashboard' %}">Superviseur</a></li>
+        {% endif %}
+        <!-- Admin link removed for private nav to keep the sidebar focused -->
+        <li>
+          <form action="{% url 'logout' %}" method="post" class="sidebar-logout-form">
+            {% csrf_token %}
+            <button type="submit" class="sidebar-logout">Se déconnecter</button>
+          </form>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <div class="dashboard-inner">
+      <div class="dashboard-content container">
+      <header class="dashboard-header">
+        <div class="dashboard-header-inner">
+          <div class="welcome">
+            <h1>Bonjour, {{ request.user.first_name|default:request.user.username }} 👋</h1>
+            <p class="muted">Résumé rapide des activités et KPIs.</p>
+            <div class="role-badges mt-2">
+              {% if roles.superviseur %}<span class="role-badge">Superviseur</span>{% endif %}
+              {% if roles.encadreur %}<span class="role-badge">Encadreur</span>{% endif %}
+            </div>
+          </div>
+
+          <div class="private-actions">
+            <a class="action-card" href="{% url 'reports_create' %}">
+              <div class="action-icon">＋</div>
+              <div class="action-body"><h3>Créer un rapport</h3><p class="muted">Rapide et simple</p></div>
+            </a>
+            <a class="action-card" href="{% url 'reports_my' %}">
+              <div class="action-icon">📄</div>
+              <div class="action-body"><h3>Mes rapports</h3><p class="muted">Voir et gérer vos rapports</p></div>
+            </a>
+            <a class="action-card" href="{% url 'inbox_list' %}">
+              <div class="action-icon">✉️</div>
+              <div class="action-body"><h3>Messages</h3><p class="muted">Consultez votre boîte</p></div>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-meta"><span class="kpi-icon">💶</span><div class="stat-label">Nouveaux dons</div></div>
+        <div class="stat-value">{% if stats.dons %}{{ stats.dons }}{% else %}628{% endif %}</div>
+        <div class="stat-spark" style="--w:40%"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-meta"><span class="kpi-icon">👥</span><div class="stat-label">Bénéficiaires</div></div>
+        <div class="stat-value">{% if stats.beneficiaires %}{{ stats.beneficiaires }}{% else %}2434{% endif %}</div>
+        <div class="stat-spark" style="--w:70%"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-meta"><span class="kpi-icon">📄</span><div class="stat-label">Rapports</div></div>
+        <div class="stat-value">{% if stats.rapports_count %}{{ stats.rapports_count }}{% else %}1259{% endif %}</div>
+        <div class="stat-spark" style="--w:55%"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-meta"><span class="kpi-icon">⭐</span><div class="stat-label">Note moyenne</div></div>
+        <div class="stat-value">{% if stats.rating_avg %}{{ stats.rating_avg }}{% else %}8,5{% endif %}</div>
+        <div class="stat-spark" style="--w:85%"></div>
+      </div>
+      </section>
+
+      <section class="charts-grid">
+      <div class="charts-main">
+        <div class="card chart-card">
+          <h3>Activité mensuelle</h3>
+          <canvas id="chartActivity" height="120"></canvas>
+        </div>
+
+        <div class="card chart-card">
+          <h3>Courbe des rapports</h3>
+          <canvas id="chartReports" height="120"></canvas>
+        </div>
+      </div>
+
+      <aside class="charts-side">
+        <div class="card small-card">
+          <h4>Progression</h4>
+          <div class="progress-circle" data-percent="45">45%</div>
+        </div>
+
+        <div class="card small-card">
+          <h4>Alertes</h4>
+          <p>3 actions requises</p>
+        </div>
+
+        <div class="card small-card">
+          <h4>Derniers rapports</h4>
+          <ul class="mini-list">
+            {% if recent_reports %}
+              {% for rr in recent_reports %}
+                <li><a href="{% url 'reports_detail' rr.pk %}">Rapport #{{ rr.pk }} — {{ rr.date }}</a></li>
+              {% endfor %}
+            {% else %}
+              <li>Rapport #1259</li>
+              <li>Rapport #1258</li>
+              <li>Rapport #1257</li>
+            {% endif %}
+          </ul>
+        </div>
+      </aside>
+      </section>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}

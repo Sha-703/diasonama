@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h1>Rapport — {{ object.date }}</h1>
+  <p><strong>Auteur:</strong> {{ object.author.get_full_name|default:object.author.username }}</p>
+  <p><strong>Superviseur:</strong> {% if object.supervisor %}{{ object.supervisor.get_full_name|default:object.supervisor.username }}{% else %}—{% endif %}</p>
+  <p>{{ object.text }}</p>
+  {% if object.photos.exists %}
+    <div class="report-photos">
+      {% for p in object.photos.all %}
+        <img src="{{ p.image.url }}" alt="{{ p.caption }}" style="max-width:220px;border-radius:6px;margin-right:8px;">
+      {% endfor %}
+    </div>
+  {% endif %}
+  <p><a class="btn btn-outline" href="{% url 'reports_edit' object.pk %}">Modifier</a> <a class="btn btn-outline" href="{% url 'reports_delete' object.pk %}">Supprimer</a></p>
+</div>
+{% endblock %}

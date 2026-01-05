@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container" style="max-width:980px;padding:28px 16px;">
+    <div class="card shadow-sm report-card">
+      <div class="card-body">
+        <div class="report-header d-flex align-items-start justify-content-between mb-3 gap-3">
+          <div>
+            <h1 class="h4 mb-1">{% if object %}Modifier le rapport{% else %}Nouveau rapport{% endif %}</h1>
+            <p class="muted mb-0">Remplissez les informations du rapport. Les champs marqués d'une étoile sont obligatoires.</p>
+            {% if object %}
+              <div class="text-muted small mt-1">Créé le: {{ object.created_at|date:"d M Y" }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="report-form">{% csrf_token %}
+          {% if form.errors %}
+            <div class="alert alert-danger">
+              <strong>Veuillez corriger les erreurs ci-dessous :</strong>
+              <ul class="mb-0">
+                {% for field in form %}
+                  {% for error in field.errors %}
+                    <li>{{ field.label }}: {{ error }}</li>
+                  {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          <div class="row">
+            <div class="col-md-5">
+              <div class="card mb-3 field-card">
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label class="form-label required" for="id_date">Date</label>
+                    {{ form.date }}
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label" for="id_activity">Activité liée</label>
+                    {{ form.activity }}
+                    <div class="form-text">Sélectionnez l'activité associée (facultatif).</div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label required" for="id_text">Texte du rapport</label>
+                    {{ form.text }}
+                    <div class="form-text">Rédigez un résumé concis (max 1000 caractères).</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-7">
+              <div class="card mb-3 field-card side-card">
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label class="form-label required" for="id_status">Statut</label>
+                    {{ form.status }}
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label" for="id_supervisor">Superviseur (optionnel)</label>
+                    {{ form.supervisor }}
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label" for="id_photo">Photo (optionnelle)</label>
+                    <input type="file" name="photo" id="id_photo" class="form-control" accept="image/*">
+                    <div id="photo_preview" class="mt-2" style="display:none">
+                      <img id="photo_preview_img" src="" alt="Aperçu photo" style="max-width:100%;border-radius:8px;box-shadow:0 8px 20px rgba(0,0,0,0.08)">
+                    </div>
+                    <div class="form-text">Image JPG/PNG recommandée (max 5MB).</div>
+                  </div>
+
+                  <div class="report-actions mt-3 d-flex gap-2 justify-content-end">
+                    <a class="btn btn-outline-secondary" href="{% url 'reports_list' %}">Annuler</a>
+                    <button class="btn btn-primary" type="submit">Enregistrer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function(){
+      const input = document.getElementById('id_photo');
+      const preview = document.getElementById('photo_preview');
+      const img = document.getElementById('photo_preview_img');
+      if (!input) return;
+      input.addEventListener('change', function(e){
+        const file = this.files && this.files[0];
+        if (!file) { preview.style.display='none'; img.src=''; return; }
+        const reader = new FileReader();
+        reader.onload = function(ev){ img.src = ev.target.result; preview.style.display='block'; }
+        reader.readAsDataURL(file);
+      });
+    })();
+  </script>
+{% endblock %}

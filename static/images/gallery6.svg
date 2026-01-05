@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#eef6ff"/>
+  <text x="50" y="80" font-size="28" fill="#4b7bb9">Galerie image 6</text>
+  <rect x="40" y="120" width="720" height="420" fill="#edf5ff" stroke="#dbe9ff"/>
+</svg>

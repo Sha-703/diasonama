@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container">
+    <h1>Envoyer un message (Visionnaire)</h1>
+    <form method="post">
+      {% csrf_token %}
+      <label>Sujet<input name="subject" class="input-field"></label>
+      <label>Message<textarea name="body" class="input-field"></textarea></label>
+      <label><input type="checkbox" name="broadcast_all"> Envoyer à tous</label>
+      <fieldset>
+        <legend>Groupes destinataires (ignorer si 'Envoyer à tous' coché)</legend>
+        {% for g in groups %}
+          <label><input type="checkbox" name="groups" value="{{ g.pk }}"> {{ g.name }}</label>
+        {% endfor %}
+      </fieldset>
+      <button class="btn btn-primary" type="submit">Envoyer</button>
+    </form>
+  </div>
+{% endblock %}

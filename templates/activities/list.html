@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container activities-page">
+  <h1>Activités</h1>
+  {% if activities %}
+    <div class="activities-grid">
+      {% for activity in activities %}
+        <article class="activity-card">
+          <h3>{{ activity.title }}</h3>
+          <p class="meta">{% if activity.start_date %}{{ activity.start_date }}{% endif %}{% if activity.end_date %} — {{ activity.end_date }}{% endif %}</p>
+          <p class="desc">{{ activity.description|default:"(Pas de description)"|truncatechars:200 }}</p>
+          <p class="byline">Publié par: {% if activity.created_by %}{{ activity.created_by.get_full_name|default:activity.created_by.username }}{% else %}Anonyme{% endif %}</p>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>Aucune activité pour le moment. Revenez bientôt.</p>
+  {% endif %}
+</div>
+{% endblock %}

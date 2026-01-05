@@ -1,0 +1,637 @@
+/* Basic styles for DIASONAMA */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: #ffffff;
+  color: #080808;
+}
+ 
+
+/* Layout: make footer stick to bottom even when page is short */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+/* Keep body normal; let .site-wrapper handle vertical flex layout */
+body {
+  min-height: 100%;
+}
+
+header {
+  background: #ffffff;
+  color: #2bff00;
+  padding: 8px 12px; /* reduced vertical padding to make navbar shorter */
+}
+header nav a {
+  color: #51ff00;
+  text-decoration: none;
+  margin-right: 12px;
+}
+main {
+  /* allow Bootstrap containers inside main to control width; keep main flexible so footer is pushed down */
+  flex: 1 0 auto;
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+h1 {
+  color: #51ff00;
+}
+form {
+  display: grid;
+  gap: 8px;
+  max-width: 480px;
+}
+input, textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+button {
+  background: #0b5ed7;
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+footer {
+  text-align: center;
+  padding: 10px 8px; /* reduced vertical padding to shrink footer height */
+  color: #48ff00;
+  font-size: 16px;
+  background: transparent;
+}
+
+
+:root {
+  /* refined palette */
+  --color-primary: #0d6efd; /* bootstrap primary blue */
+  --color-accent: #20c997;  /* teal accent */
+  --muted: #6c757d;
+  --bg: #f8fafc;
+}
+
+/* Widgets / small cards */
+.widgets { padding: 28px 0; }
+.widgets-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+.widget-card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 10px 30px rgba(12,20,30,0.06);display:flex;gap:12px;align-items:center}
+.widget-icon{width:56px;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff}
+.widget-title{font-weight:700;margin:0 0 4px}
+.widget-value{font-size:1.45rem;font-weight:700;color:var(--color-primary)}
+.widget-note{font-size:0.9rem;color:var(--muted)}
+
+@media (max-width:900px){
+  .widgets-grid{grid-template-columns:repeat(1,1fr)}
+}
+
+/* Report form styles */
+.report-form .form-label{font-weight:700;margin-bottom:6px}
+.report-form .form-control, .report-form textarea{border-radius:8px;padding:10px;border:1px solid #e6eef6}
+.report-form .form-control:focus, .report-form textarea:focus{box-shadow:0 6px 18px rgba(13,110,253,0.08);border-color:var(--color-primary)}
+
+.card.shadow-sm{border-radius:12px}
+
+/* Field card used in report form */
+.field-card { border-radius:10px; overflow:hidden }
+.field-card .card-body { padding:16px }
+.field-card .form-label{display:block;margin-bottom:8px;font-weight:700}
+
+/* Right-side report form card: ensure enough space for controls and buttons */
+.report-form .side-card { min-height: 360px; display:flex; flex-direction:column; }
+.report-form .side-card .card-body { display:flex; flex-direction:column; justify-content:space-between }
+.report-actions { margin-top: 12px }
+
+/* Additional styling for the reorganized report form */
+.report-card { border-radius:12px }
+.report-header .muted{color:var(--muted)}
+.report-form .required:after{content:" *";color:#d63384}
+.report-text .form-text, .report-form .form-text{font-size:0.85rem;color:var(--muted);margin-top:6px}
+.report-actions .btn{min-width:110px}
+
+@media (max-width:900px){
+  .report-header{padding-bottom:8px}
+  .report-main, .report-side{width:100%}
+}
+
+/* Overview cards for supervisor page */
+.overview-cards .card{border-radius:10px}
+.overview-card .ov-icon{width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.overview-card .small{font-size:0.85rem}
+.overview-card .h5{font-size:1.35rem}
+.overview-card .card{transition:transform .12s ease,box-shadow .12s ease}
+.overview-card .card:hover{transform:translateY(-6px);box-shadow:0 16px 36px rgba(12,20,30,0.08)}
+
+@media (max-width:900px){
+  .overview-cards .col-md-4{flex:0 0 100%;max-width:100%}
+}
+
+/* Make footer stick to bottom */
+.site-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-main {
+  flex: 1 0 auto;
+}
+
+.site-footer {
+  /* Non-fixed footer: background and border */
+  background: #fff;
+  border-top: 1px solid #e9ecef;
+  padding: 8px 12px;
+}
+
+/* Ensure footer is pushed to the bottom using the flex wrapper */
+.site-wrapper { min-height: 100vh; display: flex; flex-direction: column; }
+.site-wrapper > .site-footer { margin-top: auto }
+
+/* Main content spacing (no extra bottom padding needed for fixed footer) */
+.site-main { flex: 1 0 auto; padding-bottom: 0 }
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0; /* smaller header inner padding */
+}
+.brand a {
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 1rem; /* slightly smaller brand font */
+}
+
+/* Reduce navbar link vertical padding to decrease navbar height */
+.navbar .nav-link { padding: .45rem .6rem; }
+.navbar { padding-top: 0; padding-bottom: 0; }
+.navbar-toggler { padding: .25rem .5rem; }
+.site-nav {
+  display: flex;
+  gap: 16px;
+  margin-left: 12px;
+}
+.site-nav a {
+  color: #333;
+  text-decoration: none;
+  padding: 6px 4px;
+}
+.btn {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.btn-cta {
+  background: var(--color-primary);
+  color: #fff;
+  margin-left: auto;
+}
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+.btn-outline {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #333;
+  background: transparent;
+}
+.btn-secondary {
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #333;
+}
+
+/* Hero (constrained to normal flow; avoid 100vw / negative-margin hacks that cause horizontal scroll) */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 68vh;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Utility: full-bleed sections (extend edge-to-edge while keeping inner container centered) */
+.full-bleed {
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Specific tweaks for full-bleed sections used on homepage */
+.showcase.full-bleed { padding: 48px 0; }
+.gallery.full-bleed { padding: 28px 0; background: linear-gradient(180deg, #f7f8fc 0%, #ffffff 100%); }
+.team.full-bleed { padding: 28px 0; }
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* subtle blur and slight scale to create a soft, designer look */
+  filter: blur(3px) saturate(1.02);
+  transform: scale(1.02);
+  transition: filter .3s ease, transform .3s ease;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  /* soft blue tint + subtle glass blur for readability */
+  background: linear-gradient(90deg, rgba(13, 109, 253, 0.479) 0%, rgba(13,110,253,0.12) 60%, rgba(255,255,255,0) 100%);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.hero-content {
+  position: relative;
+  z-index: 3;
+  color: #fff;
+  text-align: left;
+  /* remove horizontal padding so background/image reaches the edges */
+  padding: 48px 0;
+}
+.hero h1 {
+  font-size: 3rem;
+  margin: 0 0 12px;
+  color:rgba(0, 0, 0, 0.8)
+}
+.hero .lead {
+  font-size: 2.5rem;
+  width: 980px;
+  margin-bottom: 18px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+
+/* Featured cities cards */
+.featured-cities{padding:18px 0;background:linear-gradient(180deg,#f4f7fb,#ffffff)}
+.cities-grid{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.city-card{display:block;background:#fff;padding:14px 20px;border-radius:8px;box-shadow:0 8px 20px rgba(12,20,30,0.06);text-decoration:none;color:var(--color-primary);font-weight:700;letter-spacing:1px}
+
+@media (max-width:900px){
+  .hs-row{flex-direction:row;flex-wrap:wrap}
+  .hs-input{min-width:100%}
+  .hs-select{width:100%}
+  .hs-quick{flex-direction:column}
+  .hero h1{font-size:1.8rem}
+}
+
+@media (max-width:576px){
+  .hero {min-height:56vh}
+  .hero h1{font-size:1.5rem}
+  .hero .lead{font-size:0.95rem}
+}
+
+/* Features */
+.features { padding: 36px 0; }
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.feature{background:#fff;padding:20px;border-radius:10px;box-shadow:0 10px 30px rgba(12,20,30,0.04);text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.feature-icon{width:64px;height:64px;margin-bottom:6px}
+.feature h3{margin:6px 0}
+.feature p{color:var(--muted);margin:0}
+.feature-grid .feature{transition:transform .18s ease,box-shadow .18s ease}
+.feature-grid .feature:hover{transform:translateY(-8px);box-shadow:0 22px 48px rgba(12,20,30,0.12)}
+
+.showcase {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 48px 0;
+}
+.showcase-left {
+  flex: 1;
+}
+.showcase-right {
+  flex: 1;
+  text-align: center;
+}
+.showcase-right img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
+}
+
+/* Gallery and team tweaks to work with Bootstrap layout */
+.gallery-main{width:100%;height:auto;object-fit:cover;max-height:420px}
+.gallery-thumb{width:100%;height:160px;object-fit:cover}
+.team-photo{width:110px;height:110px;object-fit:cover;display:block;margin:0 auto}
+
+/* Minor navbar/footer polish to blend with custom colors */
+.navbar-light .navbar-nav .nav-link{color:rgba(0,0,0,0.7)}
+.navbar-light .navbar-brand{font-weight:700;color:var(--color-primary)}
+.site-header{background:#fff;border-bottom:1px solid #e9eef3}
+.site-footer a.text-muted:hover{color:var(--color-primary);text-decoration:none}
+
+/* Card shadows and spacing */
+.card.border-0{border:0}
+.card.shadow-sm{box-shadow:0 6px 18px rgba(12,20,30,0.06)}
+
+.site-footer {
+  background: #fff;
+  border-top: 1px solid #e9ecef;
+  padding: 20px 0;
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.footer-inner p {
+  margin: 0;
+  color: var(--muted);
+}
+.footer-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.dashboard-header{background:linear-gradient(90deg,var(--color-primary),var(--color-accent));color:#fff;padding:18px;border-radius:8px;margin-bottom:18px}
+.dashboard-header-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dashboard-header .welcome h1{margin:0;font-size:1.6rem}
+.dashboard-header .muted{opacity:0.95}
+.role-badges{display:flex;gap:8px;align-items:center}
+.role-badge{background:rgba(255,255,255,0.12);padding:6px 10px;border-radius:999px;font-weight:600;font-size:0.9rem}
+.role-badge.admin{background:rgba(255,230,180,0.14);color:#fff}
+
+.private-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:12px}
+.action-card{display:flex;gap:12px;align-items:flex-start;background:#fff;padding:16px;border-radius:10px;box-shadow:0 10px 30px rgba(12,20,30,0.06);transition:transform .12s ease,box-shadow .12s ease;text-decoration:none;color:inherit}
+.action-card:hover{transform:translateY(-6px);box-shadow:0 18px 46px rgba(12,20,30,0.1)}
+.action-icon{font-size:28px;line-height:1;padding:8px;background:linear-gradient(180deg,#f0f6ff,#ffffff);border-radius:8px;display:flex;align-items:center;justify-content:center;min-width:56px;height:56px;box-shadow:0 6px 18px rgba(12,20,30,0.04)}
+.action-body h3{margin:0 0 6px;font-size:1.05rem}
+.action-body p{margin:0;color:var(--muted)}
+
+@media (max-width:540px){
+  .dashboard-header-inner{flex-direction:column;align-items:flex-start}
+  .role-badges{width:100%;justify-content:flex-start}
+}
+
+/* Dashboard layout similar to mockup: left sidebar + main content */
+.dashboard-layout{display:flex;gap:22px;align-items:flex-start}
+.dashboard-sidebar{width:260px;min-width:220px;background:linear-gradient(180deg,#1f2d55,#13203a);color:#fff;padding:22px;border-radius:10px;flex:0 0 260px}
+.sidebar-brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+
+/* Make the dashboard sidebar sticky inside the page container so its
+   left edge aligns with the navbar container and the content starts
+   where the navbar/container ends. Sticky keeps it visible while
+   scrolling without removing it from the normal flow. */
+.dashboard-sidebar {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 16px; /* distance from top of viewport when sticky */
+  height: auto;
+  overflow: visible;
+}
+
+/* Remove forced left margin on main content so the container alignment
+   is preserved; the sidebar sits inside the container so no extra offset
+   is needed. */
+.dashboard-main { margin-left: 0; }
+
+/* Responsive: sidebar remains full width in normal flow on small screens */
+@media (max-width: 900px) {
+  .dashboard-sidebar { position: static; width: 100%; height: auto; margin-bottom: 12px; border-radius: 8px; }
+}
+.avatar{width:56px;height:56px;border-radius:50%;background:#fff;color:#13203a;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px}
+.brand-info strong{display:block}
+.brand-info .muted{font-size:0.85rem;opacity:0.9}
+.sidebar-nav ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.sidebar-nav a{color:rgba(255,255,255,0.95);text-decoration:none;padding:8px 10px;border-radius:6px;display:block}
+.sidebar-nav li.active a, .sidebar-nav a:hover{background:rgba(255,255,255,0.06)}
+
+.dashboard-main{flex:1 1 auto;min-width:0;background:transparent}
+.dashboard-inner{width:100%}
+.dashboard-content{max-width:1100px;margin:0 auto;padding:12px}
+.dash-top h2{margin:0}
+
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}
+.stat-card{background:#fff;padding:16px;border-radius:10px;box-shadow:0 12px 36px rgba(12,20,30,0.06);display:flex;flex-direction:column;gap:10px}
+.stat-meta{display:flex;align-items:center;gap:10px}
+.stat-meta .kpi-icon{font-size:20px}
+.stat-label{font-size:0.95rem;color:var(--muted)}
+.stat-value{font-size:1.6rem;font-weight:700;color:var(--color-primary)}
+.stat-spark{height:6px;background:linear-gradient(90deg,var(--color-primary),#8fb8ff);border-radius:4px;width:calc(var(--w,50%));margin-top:6px}
+
+.charts-grid{display:grid;grid-template-columns:2fr 1fr;gap:18px}
+.charts-main{display:flex;flex-direction:column;gap:14px}
+.charts-side{display:flex;flex-direction:column;gap:12px}
+.card{background:#fff;padding:14px;border-radius:8px;box-shadow:0 10px 30px rgba(12,20,30,0.06)}
+.chart-card h3{margin:0 0 8px}
+
+/* polished adjustments */
+.dashboard-main .card{padding:18px}
+.dash-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.dash-top .muted{color:var(--muted)}
+
+/* logout form styles */
+.logout-form{display:inline-block;margin-left:10px}
+.logout-form .btn{padding:8px 10px}
+.sidebar-logout-form{display:inline}
+.sidebar-logout{background:transparent;color:rgba(255,255,255,0.9);border:none;padding:8px 10px;text-align:left;cursor:pointer;border-radius:6px}
+.sidebar-logout:hover{background:rgba(255,255,255,0.06)}
+
+/* make sidebar sticky for desktop */
+.dashboard-sidebar{position:sticky;top:20px}
+
+/* improve charts area */
+.bar-chart{background:linear-gradient(180deg,#fff,#fbfdff);padding:12px;border-radius:8px}
+.line-chart-placeholder{background:linear-gradient(180deg,#fff,#fbfdff);border-radius:8px}
+
+@media (max-width:1000px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .dashboard-sidebar{display:none}
+  .dashboard-layout{flex-direction:column}
+}
+
+/* Simple bar chart placeholder */
+.bar-chart{display:flex;align-items:end;gap:8px;height:120px;padding:8px}
+.bar-chart .bar{width:14%;background:linear-gradient(180deg,#4f8cff,#1f6be6);border-radius:6px}
+
+.line-chart-placeholder{height:140px;display:flex;align-items:center;justify-content:center;color:var(--muted);border-radius:6px;background:linear-gradient(180deg,#fbfdff,#f6f8ff);}
+
+.small-card h4{margin:0 0 8px}
+.mini-list{list-style:none;padding:0;margin:0}
+.mini-list li{padding:6px 0;border-bottom:1px dashed #eee}
+
+.progress-circle{width:72px;height:72px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-weight:700;background:conic-gradient(#0b5ed7 0% 45%, #e9eefc 45% 100%);color:#0b3ea6}
+
+@media (max-width:800px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .dashboard-sidebar{display:none}
+  .dashboard-layout{flex-direction:column}
+  .charts-grid{grid-template-columns:1fr}
+}
+
+@media (min-width:801px) and (max-width:1000px){
+  /* medium screens: keep sidebar but stack stats into 2 columns */
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .charts-grid{grid-template-columns:1fr 1fr}
+}
+
+/* Private navbar (overrides global nav when in private area) */
+.private-nav{display:flex;gap:12px;align-items:center;margin-left:12px}
+.private-nav a{color:#ffffffcc;text-decoration:none;padding:8px 10px;border-radius:6px}
+.private-nav a:hover{background:rgba(255,255,255,0.06)}
+.private-user{margin-left:auto;display:flex;gap:10px;align-items:center}
+.private-user .muted{color:#ffffffcc}
+.site-header .private-nav + .private-user .btn-outline{border-color:rgba(255,255,255,0.12);color:#fff}
+
+@media (max-width:800px){
+  .private-nav{display:none}
+}
+
+
+/* Responsive */
+@media (max-width: 900px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
+  .site-nav {
+    display: none;
+  }
+  .header-inner {
+    gap: 8px;
+  }
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 50vh;
+    padding: 24px 0;
+  }
+  .hero-content {
+    padding: 18px;
+  }
+}
+
+/* Gallery: main image + thumbnails layout */
+.gallery-inner{display:flex;gap:20px;align-items:flex-start;padding:28px 0}
+.gallery-left{flex:1}
+.gallery-main{width:100%;height:420px;object-fit:cover;border-radius:10px;box-shadow:0 12px 30px rgba(12,20,30,0.06)}
+.gallery-right{width:320px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gallery-right img{width:100%;height:150px;object-fit:cover;border-radius:8px;box-shadow:0 8px 20px rgba(12,20,30,0.04)}
+.gallery h2{margin:0 0 8px}
+.gallery p{color:var(--muted);margin-bottom:12px}
+
+/* CERCLE DE LA GALERIE (uniform size) */
+.photo-circle{width:270px;height:260px;border-radius:50%;overflow:hidden;margin:0 auto;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(12,20,30,0.06)}
+.photo-circle img{width:100%;height:100%;object-fit:cover;display:block}
+
+@media (max-width:900px){
+  .gallery-inner{flex-direction:column}
+  .gallery-right{width:100%;grid-template-columns:repeat(3,1fr)}
+  .photo-circle{width:180px;height:180px}
+}
+
+/* Team: grid of cards */
+.team-header{margin-bottom:14px}
+.team h2{margin:0 0 6px}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.team-card{background:#fff;padding:14px;border-radius:10px;text-align:center}
+.team-card img{width:100%;height:160px;object-fit:cover;border-radius:8px}
+.team-card h4{margin:10px 0 6px}
+.team-card .role{color:var(--muted);font-size:0.95rem}
+
+@media (max-width:900px){
+  .team-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media (max-width:480px){
+  .gallery-right{grid-template-columns:repeat(2,1fr)}
+  .team-grid{grid-template-columns:1fr}
+}
+
+/* Lightbox styles */
+.lightbox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,0.75);opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:1200}
+.lightbox.open{opacity:1;pointer-events:auto}
+.lightbox-img{max-width:90%;max-height:80%;border-radius:6px;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
+.lightbox-close{position:absolute;top:18px;right:20px;background:transparent;border:0;color:#fff;font-size:28px;cursor:pointer}
+.lightbox-caption{color:#fff;margin-top:12px;text-align:center}
+
+/* Two-column photo+text section */
+.photo-text{display:flex;gap:20px;align-items:center;padding:48px 0}
+.photo-text .pt-image{flex:1}
+.photo-text .pt-image img{width:100%;height:320px;object-fit:cover;border-radius:10px}
+.photo-text .pt-text{flex:1}
+
+@media (max-width:800px){.photo-text{flex-direction:row}.photo-text .pt-image img{height:120px}}
+
+/* Activities page styles */
+.activities-page h1{margin:18px 0 12px;color:var(--color-accent)}
+.activities-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.activity-card{background:#fff;padding:18px;border-radius:8px;box-shadow:0 8px 22px rgba(12,20,30,0.04);display:flex;flex-direction:column;gap:8px}
+.activity-card h3{margin:0;font-size:1.05rem}
+.activity-card .meta{font-size:0.9rem;color:var(--muted)}
+.activity-card .desc{flex:1;color:#333}
+.activity-card .byline{font-size:0.85rem;color:var(--muted);margin-top:6px}
+
+/* About page styles */
+.about{padding:36px 0}
+.about .lead{font-size:1.05rem;color:#264a7f;margin-bottom:14px}
+.about-block{background:#fff;padding:18px;border-radius:8px;box-shadow:0 6px 18px rgba(18,26,40,0.03)}
+.about-block p{line-height:1.6;margin:12px 0}
+.about .cta{margin-top:14px;font-weight:600}
+
+/* Auth pages: split-screen login / password reset */
+.auth-page{display:flex;min-height:70vh;margin:28px auto;max-width:1100px;box-shadow:0 6px 20px rgba(0,0,0,0.06);border-radius:10px;overflow:hidden}
+.auth-left{flex:1;background-size:cover;background-position:center;position:relative;display:flex;align-items:center;color:#fff}
+.auth-left-overlay{position:absolute;inset:0;background:linear-gradient(120deg, rgba(5,10,25,0.5), rgba(10,40,80,0.35));}
+.auth-left-content{position:relative;padding:48px 36px;max-width:520px}
+.auth-left h1{font-size:2.2rem;margin:0 0 12px}
+.auth-left p{opacity:0.95}
+.auth-right{width:420px;background:#fff;display:flex;align-items:center;justify-content:center;padding:28px}
+.auth-card{width:100%}
+.auth-card h2{margin-top:0;margin-bottom:12px}
+.auth-card label{display:block;font-weight:600;margin-top:10px}
+.auth-card .input-field{width:100%;padding:10px;border-radius:6px;border:1px solid #e2e6ef;margin-top:6px}
+.auth-card .btn{margin-top:12px}
+
+@media (max-width:900px){
+  .auth-page{flex-direction:column;max-width:720px}
+  .auth-right{width:100%;padding:20px}
+  .auth-left{height:220px}
+}
+
+/* Responsive overrides to ensure hero and container elements behave with Bootstrap */
+@media (max-width: 1200px) {
+  .hero { min-height: 52vh }
+}
+/* Ensure hero fills full viewport when requested */
+.hero { min-height: 100vh; display: flex; align-items: center }
+@media (max-width: 900px) {
+  .hero { padding: 32px 0 }
+  .hero .display-5 { font-size: 1.6rem }
+  .hs-input { min-width: 100% }
+  .hs-quick { flex-direction: column; gap: 8px }
+  .gallery-main { max-height: 320px }
+  .gallery-thumb { height: 120px }
+}
+
+/* Make site-main containers fluid-friendly */
+.site-main { padding: 0 }
+.site-main .container { padding-top: 28px; padding-bottom: 28px }
+
+/* Ensure photo-text images scale and stack */
+.photo-text img { width: 100%; height: auto; display: block }
+
+/* Accessibility: increase tap targets */
+button.btn, .btn { min-height: 44px }

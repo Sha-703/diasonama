@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="max-width:640px;padding:36px 16px;">
+  <h1>Supprimer le rapport</h1>
+  <p>Voulez-vous vraiment supprimer ce rapport ?</p>
+  <form method="post">{% csrf_token %}
+    <button class="btn btn-primary" type="submit">Confirmer la suppression</button>
+    <a class="btn btn-outline" href="{% url 'reports_detail' object.pk %}">Annuler</a>
+  </form>
+</div>
+{% endblock %}

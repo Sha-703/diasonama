@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <h1>Contact</h1>
+  <p>Pour nous contacter : <a href="mailto:associationdiasonama@gmail.com">associationdiasonama@gmail.com</a></p>
+
+  <div class="contact-grid">
+    <div class="contact-form">
+      <form method="post">
+        {% csrf_token %}
+        <label for="id_name">Nom</label>
+        <input class="input-field" id="id_name" name="name" type="text">
+        <label for="id_email">Email</label>
+        <input class="input-field" id="id_email" name="email" type="email">
+        <label for="id_message">Message</label>
+        <textarea class="input-field" id="id_message" name="message"></textarea>
+        <button class="btn" type="submit">Envoyer</button>
+      </form>
+    </div>
+
+    <div class="contact-map">
+      <h2>Notre localisation</h2>
+      <!-- Leaflet CSS -->
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+      <div id="map" style="height:300px;border-radius:8px;overflow:hidden"></div>
+
+      <!-- Leaflet JS -->
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+      <script>
+        (function(){
+          // Coordinates par défaut (modifiable) — exemple: Bamako, Mali
+          var lat = 12.6392;
+          var lon = -8.0029;
+          var map = L.map('map').setView([lat, lon], 13);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+          }).addTo(map);
+          L.marker([lat, lon]).addTo(map).bindPopup('Association DIASONAMA').openPopup();
+        })();
+      </script>
+      <p class="muted">Si vous souhaitez centrer la carte sur une autre adresse, indiquez-moi l'adresse ou les coordonnées (latitude, longitude).</p>
+    </div>
+  </div>
+{% endblock %}
