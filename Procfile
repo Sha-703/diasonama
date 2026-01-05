@@ -1,1 +1,1 @@
-web: gunicorn diasonama.wsgi --log-file - --bind 0.0.0.0:$PORT
+web: gunicorn diasonama.wsgi:application --bind 0.0.0.0:$PORT --log-file -
