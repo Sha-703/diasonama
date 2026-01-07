@@ -10,8 +10,19 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'change-me-for-production')
 # Use environment variable for debug in production; default to True for local dev
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-# Allow configuring allowed hosts via comma-separated env var
-ALLOWED_HOSTS = [h for h in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if h]
+def _clean_host(h: str) -> str:
+    """Remove scheme and trailing slashes from a host string."""
+    return h.strip().replace('http://', '').replace('https://', '').rstrip('/')
+
+# Allow configuring allowed hosts via comma-separated env var (e.g. 'example.com,localhost')
+env_hosts = [ _clean_host(h) for h in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if h.strip() ]
+
+# Include Render service host by default (can be overridden via ALLOWED_HOSTS env var)
+default_render_host = _clean_host(os.environ.get('RENDER_HOST', 'associaation-diasonama.onrender.com'))
+
+ALLOWED_HOSTS = env_hosts
+if default_render_host and default_render_host not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(default_render_host)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -99,4 +110,3 @@ LOGOUT_REDIRECT_URL = '/accounts/login/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'associationdiasonama@gmail.com'
 SERVER_EMAIL = 'associationdiasonama@gmail.com'
-ALLOWED_HOSTS = ['https://associaation-diasonama.onrender.com', 'localhost', '127.0.0.1']
