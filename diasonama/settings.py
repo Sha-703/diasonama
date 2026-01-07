@@ -99,4 +99,4 @@ LOGOUT_REDIRECT_URL = '/accounts/login/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'associationdiasonama@gmail.com'
 SERVER_EMAIL = 'associationdiasonama@gmail.com'
-ALLOWED_HOSTS = True
+ALLOWED_HOSTS = ['https://associaation-diasonama.onrender.com', 'localhost', '127.0.0.1']
