@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: diasonama-web
+    env: python
+    repo: https://github.com/Sha-703/diasonama
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn diasonama.wsgi:application --bind 0.0.0.0:$PORT --log-file -
+    autoDeploy: true
