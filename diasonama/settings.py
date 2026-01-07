@@ -24,6 +24,15 @@ ALLOWED_HOSTS = env_hosts
 if default_render_host and default_render_host not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append(default_render_host)
 
+# CSRF trusted origins: read from env `CSRF_TRUSTED_ORIGINS` (comma-separated),
+# or include the Render origin by default (must include scheme, e.g. 'https://...').
+env_csrf = [o.strip() for o in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',') if o.strip()]
+default_csrf_origin = os.environ.get('RENDER_ORIGIN', 'https://associaation-diasonama.onrender.com')
+
+CSRF_TRUSTED_ORIGINS = env_csrf
+if default_csrf_origin and default_csrf_origin not in CSRF_TRUSTED_ORIGINS:
+    CSRF_TRUSTED_ORIGINS.append(default_csrf_origin)
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
